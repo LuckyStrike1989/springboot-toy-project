@@ -24,28 +24,6 @@ services:
         volumes:
             - /var/run/docker.sock:/var/run/docker.sock
 ```
-docker-compose.yml(수정)
-```aidl
-version: '3'
-services:
-    zookeeper:
-        image: wurstmeister/zookeeper:3.4.6
-        ports:
-            - "2181:2181"
-    kafka:
-        image: wurstmeister/kafka:2.12-2.5.0
-        container_name: kafka
-        ports:
-            - "9092:9092"
-        environment:
-            KAFKA_ADVERTISED_LISTENERS: INSIDE://kafka:29092,OUTSIDE://localhost:9092 # 내부 및 외부에서 접근할 수 있는 리스너 주소를 설정합니다.
-            KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INSIDE:PLAINTEXT,OUTSIDE:PLAINTEXT # 리스너의 보안 프로토콜을 매핑합니다.
-            KAFKA_LISTENERS: INSIDE://0.0.0.0:29092,OUTSIDE://0.0.0.0:9092 # 컨테이너 내부에서 사용할 리스너 주소를 설정합니다.
-            KAFKA_INTER_BROKER_LISTENER_NAME: INSIDE # 브로커 간 통신에 사용할 리스너 이름을 지정합니다.
-            KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181 # Kafka가 Zookeeper에 연결하기 위한 주소를 지정합니다.
-        volumes:
-            - /var/run/docker.sock:/var/run/docker.sock
-```
 
 
 카프카 실행
